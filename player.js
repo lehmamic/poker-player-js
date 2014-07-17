@@ -1,7 +1,7 @@
 
 module.exports = {
 
-  VERSION: "0.0.5",
+  VERSION: "0.0.6",
 
   bet_request: function(game_state) {
 
@@ -37,7 +37,7 @@ function getPlayer (game_state) {
     for (var i = 0; i< game_state.players.length; i++)
     {
         var player = game_state.players[i];
-        if(player.hole_cards.length > 0)
+        if(player.hole_cards)
         {
             return player;
         }
