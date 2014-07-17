@@ -1,7 +1,7 @@
 var _ = require('underscore');
 module.exports = {
 
-  VERSION: "0.0.9",
+  VERSION: "1.0.0",
 
   bet_request: function(game_state) {
         return playRound(game_state);
@@ -23,7 +23,12 @@ function playRound(game_state){
         return game_state.current_buy_in + game_state.minimum_raise;
     }
     else if(hasHighCard(me.hole_cards)){
-            return getCallValue(game_state);
+        var callValue = getCallValue(game_state);
+        if (callValue > 200) {
+            return 200;
+        }
+
+        return callValue;
     }
     return 0;
 }
