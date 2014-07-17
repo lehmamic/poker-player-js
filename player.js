@@ -1,7 +1,7 @@
 var _ = require('underscore');
 module.exports = {
 
-  VERSION: "0.0.8",
+  VERSION: "0.0.9",
 
   bet_request: function(game_state) {
         return playRound(game_state);
