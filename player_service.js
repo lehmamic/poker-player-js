@@ -1,7 +1,9 @@
 var player = require('./player');
 var express = require('express');
+var http = require('http');
 var app = express();
 
+app.set('port', process.env.PORT || 1337);
 app.use(express.json());
 app.use(express.urlencoded());
 
@@ -24,5 +26,7 @@ app.post('/', function(req, res){
 });
 
 port = 1337;
-app.listen(port);
+http.createServer(app).listen(app.get('port'), function(){
+    console.log('Express server listening on port ' + app.get('port'));
+});
 console.log('Listening at http://localhost:' + port)
