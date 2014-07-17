@@ -92,13 +92,15 @@ describe('Run', function(){
                         "suit": "hearts"
                         },
                     {
-                        "rank": "6",
+                        "rank": "A",
                         "suit": "clubs"
                         }
                     ]
                 };
 
-            player.bet_request(gameStat);
+            var bet = player.bet_request(gameStat);
+
+            assert.equal(bet, 1590);
         })
     })
 });

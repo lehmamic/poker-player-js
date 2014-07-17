@@ -1,9 +1,13 @@
-
+var _ = require('underscore');
 module.exports = {
 
-  VERSION: "0.0.6",
+  VERSION: "0.0.7",
 
   bet_request: function(game_state) {
+
+      if( hasAllInCards(game_state)){
+          return getPlayer(game_state).stack;
+      }
 
       if(isBeforeFlop(game_state)){
         return playFirstRound(game_state);
@@ -72,4 +76,29 @@ function getDifferenceToHighestBet(game_state) {
 
 function getBigBlind(game_state) {
     return game_state.small_blind * 2;
+}
+
+function hasAllInCards(game_state) {
+        if (hasPair(game_state)) {
+        return true;
+    }
+
+    return false;
+}
+
+function hasPair(game_state) {
+   var counters =  _.chain(getPlayer(game_state).hole_cards)
+    .union(game_state.community_cards)
+    .countBy(function(card){
+        return card.rank;
+    }).value();
+
+    for(var num in counters) {
+        var value = counters[num];
+        if(value > 1) {
+            return true;
+        };
+    }
+
+    return false;
 }
