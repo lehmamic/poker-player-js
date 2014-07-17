@@ -1,7 +1,7 @@
 
 module.exports = {
 
-  VERSION: "0.0.3",
+  VERSION: "0.0.4",
 
   bet_request: function(game_state) {
       var me = getPlayer(game_state);
@@ -9,14 +9,13 @@ module.exports = {
       var hasHigh = hasHighCard(me.hole_cards);
 
       if(hasHigh && isBeforeFlop(game_state)) {
-          //var bigBlind = getBigBlind(game_state);
-          //var currentHighestBet = game_state.current_buy_in;
+          var bigBlind = getBigBlind(game_state);
 
-          //if(currentHighestBet > bigBlind){
+          if(game_state.current_buy_in > bigBlind){
+                return game_state.current_buy_in;
+          }
 
-          //}
-
-          return me.stack;
+          return bigBlind;
       }
       else {
           return 0;
