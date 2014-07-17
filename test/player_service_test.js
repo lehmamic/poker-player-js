@@ -12,18 +12,18 @@ describe('Version', function(){
 
 describe('bet_request', function(){
     describe('with a pair in hand', function(){
-        it('should go all in', function(){
+        it('should raise minimum amount', function(){
             var bet = player.bet_request(data.gameStatWithPairInHand);
 
-            assert.equal(bet, 1590);
+            assert.equal(bet, 560);
         })
     })
 
-    describe('with a pair in community cards', function(){
+    describe('with a pair in community cards and low cards in hand', function(){
         it('should call', function(){
             var bet = player.bet_request(data.gameStatWithPairInCommunityCards);
 
-            assert.equal(bet, 240);
+            assert.equal(bet, 0);
         })
     })
 
@@ -31,7 +31,7 @@ describe('bet_request', function(){
         it('should call', function(){
             var bet = player.bet_request(data.gameStatWithHighCards);
 
-            assert.equal(bet, 320);
+            assert.equal(bet, 240);
         })
     })
 });
