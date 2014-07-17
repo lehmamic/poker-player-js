@@ -1,10 +1,10 @@
 
 module.exports = {
 
-  VERSION: "Default JavaScript folding player",
+  VERSION: "0.0.1",
 
   bet_request: function(game_state) {
-    return 0;
+    return game_state.stack;
   },
 
   showdown: function(game_state) {
