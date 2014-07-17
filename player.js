@@ -87,18 +87,25 @@ function hasAllInCards(game_state) {
 }
 
 function hasPair(game_state) {
-   var counters =  _.chain(getPlayer(game_state).hole_cards)
+    var me = getPlayer(game_state);
+    var counters =  _.chain(me.hole_cards)
     .union(game_state.community_cards)
     .countBy(function(card){
         return card.rank;
     }).value();
 
-    for(var num in counters) {
-        var value = counters[num];
-        if(value > 1) {
+    for(var card in counters) {
+        var value = counters[card];
+        if(value > 1 && playerHasCard(me, card)) {
             return true;
         };
     }
 
     return false;
+}
+
+function playerHasCard(me, card) {
+    return _.some(me.hole_cards, function(cardInHand) {
+        return cardInHand.rank === card;
+    });
 }
