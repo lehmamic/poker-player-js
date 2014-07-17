@@ -1,19 +1,15 @@
 
 module.exports = {
 
-  VERSION: "0.0.2",
+  VERSION: "0.0.5",
 
   bet_request: function(game_state) {
-      var me = getPlayer(game_state);
 
-      var hasHigh = hasHighCard(me.hole_cards);
+      if(isBeforeFlop(game_state)){
+        return playFirstRound(game_state);
+      }
 
-      if(hasHigh && isBeforeFlop(game_state)) {
-          return me.stack;
-      }
-      else {
-          return 0;
-      }
+      return getDifferenceToHighestBet(game_state);
   },
 
   showdown: function(game_state) {
@@ -21,10 +17,26 @@ module.exports = {
   }
 };
 
+function playFirstRound(game_state){
+    var me = getPlayer(game_state);
+
+    var hasHigh = hasHighCard(me.hole_cards);
+    if(hasHigh){
+        var bigBlind = getBigBlind(game_state);
+
+        if(game_state.current_buy_in > bigBlind){
+            return game_state.current_buy_in;
+        }
+
+        return bigBlind;
+    }
+    return 0;
+}
+
 function getPlayer (game_state) {
     for (var i = 0; i< game_state.players.length; i++)
     {
-        var player = hole_cards.players[i];
+        var player = game_state.players[i];
         if(player.hole_cards.length > 0)
         {
             return player;
@@ -52,4 +64,12 @@ function isHighCard(card) {
 
 function isBeforeFlop(game_state) {
     return game_state.community_cards.length == 0;
+}
+
+function getDifferenceToHighestBet(game_state) {
+    return game_state.current_buy_in - getPlayer(game_state).bet;
+}
+
+function getBigBlind(game_state) {
+    return game_state.small_blind * 2;
 }
