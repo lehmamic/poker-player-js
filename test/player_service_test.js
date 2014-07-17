@@ -26,4 +26,12 @@ describe('bet_request', function(){
             assert.equal(bet, 240);
         })
     })
+
+    describe('with high cards in hand', function(){
+        it('should call', function(){
+            var bet = player.bet_request(data.gameStatWithHighCards);
+
+            assert.equal(bet, 320);
+        })
+    })
 });

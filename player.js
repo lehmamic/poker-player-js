@@ -1,7 +1,7 @@
 var _ = require('underscore');
 module.exports = {
 
-  VERSION: "0.0.7",
+  VERSION: "0.0.8",
 
   bet_request: function(game_state) {
 
@@ -25,7 +25,11 @@ function playFirstRound(game_state){
     var me = getPlayer(game_state);
 
     var hasHigh = hasHighCard(me.hole_cards);
-    if(hasHigh){
+
+    if(hasPair(game_state)) {
+        game_state.current_buy_in + game_state.minimum_raise;
+    }
+    else if(hasHigh){
         var bigBlind = getBigBlind(game_state);
 
         if(game_state.current_buy_in > bigBlind){
@@ -63,7 +67,7 @@ function hasHighCard(hole_cards) {
 }
 
 function isHighCard(card) {
-    return !IsNumeric(card.rank) ||  card.rank === '10';
+    return !isNaN(card.rank) ||  card.rank === '10';
 }
 
 function isBeforeFlop(game_state) {
